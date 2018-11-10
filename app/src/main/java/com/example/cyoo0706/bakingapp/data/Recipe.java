@@ -2,14 +2,16 @@ package com.example.cyoo0706.bakingapp.data;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class Recipe {
     private int id;
     private String name;
-    private Ingredient[] ingredients;
-    private Step[] steps;
+    private List<Ingredient> ingredients;
+    private List<Step> steps;
     private String servings;
 
-    public Recipe(int id, String name, Ingredient[] ingredients, Step[] steps, String servings) {
+    public Recipe(int id, String name, List<Ingredient> ingredients, List<Step> steps, String servings) {
         this.id = id;
         this.name = name;
         this.ingredients = ingredients;
@@ -33,19 +35,19 @@ public class Recipe {
         this.name = name;
     }
 
-    public Ingredient[] getIngredients() {
+    public List<Ingredient> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(Ingredient[] ingredients) {
+    public void setIngredients(List<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
 
-    public Step[] getSteps() {
+    public List<Step> getSteps() {
         return steps;
     }
 
-    public void setSteps(Step[] steps) {
+    public void setSteps(List<Step> steps) {
         this.steps = steps;
     }
 

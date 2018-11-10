@@ -12,10 +12,11 @@ import com.example.cyoo0706.bakingapp.data.Recipe;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeAdapterViewHolder> {
 
-    private Recipe[] mRecipeData;
+    private List<Recipe> mRecipeData;
     final private RecipeAdapterOnClickHandler mClickHandler;
 
     public interface RecipeAdapterOnClickHandler {
@@ -38,7 +39,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeAdap
 
     @Override
     public void onBindViewHolder(RecipeAdapterViewHolder holder, int position) {
-        String name = mRecipeData[position].getName();
+        String name = mRecipeData.get(position).getName();
         holder.mRecipeNameTextView.setText(name);
     }
 
@@ -47,11 +48,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeAdap
         if (mRecipeData == null) {
             return 0;
         }
-        return mRecipeData.length;
+        return mRecipeData.size();
     }
 
     public void setRecipeData(List<Recipe> recipeData){
-        mRecipeData = recipeData.toArray(new Recipe[]{});
+        mRecipeData = recipeData;
         notifyDataSetChanged();
     }
 
@@ -61,13 +62,14 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeAdap
 
         public RecipeAdapterViewHolder(View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
             int position = getAdapterPosition();
-            Recipe selectedRecipe = mRecipeData[position];
+            Recipe selectedRecipe = mRecipeData.get(position);
             mClickHandler.onClick(selectedRecipe);
         }
     }
