@@ -5,19 +5,30 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.cyoo0706.bakingapp.data.Recipe;
 
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeAdapterViewHolder> {
 
-    private Recipe[] mRecipeData;
+    private List<Recipe> mRecipeData;
+    final private RecipeAdapterOnClickHandler mClickHandler;
 
-    public RecipeAdapter() {
+    public interface RecipeAdapterOnClickHandler {
+        void onClick(Recipe recipe);
+    }
 
+    public RecipeAdapter(RecipeAdapterOnClickHandler clickHandler) {
+        mClickHandler = clickHandler;
     }
 
     @Override
-    public RecipeAdapter.RecipeAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecipeAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         int recipeListItem = R.layout.recipe_list_item;
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -27,8 +38,9 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeAdap
     }
 
     @Override
-    public void onBindViewHolder(RecipeAdapter.RecipeAdapterViewHolder holder, int position) {
-
+    public void onBindViewHolder(RecipeAdapterViewHolder holder, int position) {
+        String name = mRecipeData.get(position).getName();
+        holder.mRecipeNameTextView.setText(name);
     }
 
     @Override
@@ -36,22 +48,29 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeAdap
         if (mRecipeData == null) {
             return 0;
         }
-        return mRecipeData.length;
+        return mRecipeData.size();
     }
 
-    public void setRecipeData(){
-
+    public void setRecipeData(List<Recipe> recipeData){
+        mRecipeData = recipeData;
+        notifyDataSetChanged();
     }
 
     class RecipeAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        @BindView(R.id.recipe_name_tv)
+        TextView mRecipeNameTextView;
 
         public RecipeAdapterViewHolder(View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-
+            int position = getAdapterPosition();
+            Recipe selectedRecipe = mRecipeData.get(position);
+            mClickHandler.onClick(selectedRecipe);
         }
     }
 }
