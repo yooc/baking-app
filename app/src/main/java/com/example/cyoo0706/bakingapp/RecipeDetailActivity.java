@@ -3,6 +3,7 @@ package com.example.cyoo0706.bakingapp;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.example.cyoo0706.bakingapp.data.Recipe;
@@ -17,7 +18,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeAda
 
     @BindView(R.id.ingredients_rv)
     RecyclerView mIngredientsRecyclerView;
-    @BindView(R.id.steps_list_rv)
+    @BindView(R.id.steps_overview_rv)
     RecyclerView mStepsListRecyclerView;
 
     @Override
@@ -26,15 +27,22 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeAda
         setContentView(R.layout.activity_recipe_detail);
         ButterKnife.bind(this);
 
-        IngredientAdapter ingredientsAdapter = new IngredientAdapter((Recipe) this.getIntent().getParcelableExtra(RECIPE_EXTRA));
+        Recipe selectedRecipe = this.getIntent().getParcelableExtra(RECIPE_EXTRA);
+
+        IngredientAdapter ingredientsAdapter = new IngredientAdapter(selectedRecipe);
         mIngredientsRecyclerView.setAdapter(ingredientsAdapter);
-        GridLayoutManager layoutManager = new GridLayoutManager(
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(
                 this,
                 2,
                 GridLayoutManager.VERTICAL,
                 false
         );
-        mIngredientsRecyclerView.setLayoutManager(layoutManager);
+        mIngredientsRecyclerView.setLayoutManager(gridLayoutManager);
+
+        StepAdapter stepAdapter = new StepAdapter(selectedRecipe);
+        mStepsListRecyclerView.setAdapter(stepAdapter);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        mStepsListRecyclerView.setLayoutManager(linearLayoutManager);
     }
 
     @Override

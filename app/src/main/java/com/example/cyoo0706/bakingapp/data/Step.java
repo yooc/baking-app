@@ -1,8 +1,11 @@
 package com.example.cyoo0706.bakingapp.data;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class Step {
+public class Step implements Parcelable {
     private int id;
     private String shortDescription;
     @SerializedName("description")
@@ -16,6 +19,25 @@ public class Step {
         this.longDescription = longDescription;
         this.videoUrl = videoUrl;
     }
+
+    protected Step(Parcel in) {
+        id = in.readInt();
+        shortDescription = in.readString();
+        longDescription = in.readString();
+        videoUrl = in.readString();
+    }
+
+    public static final Creator<Step> CREATOR = new Creator<Step>() {
+        @Override
+        public Step createFromParcel(Parcel in) {
+            return new Step(in);
+        }
+
+        @Override
+        public Step[] newArray(int size) {
+            return new Step[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -47,5 +69,18 @@ public class Step {
 
     public void setVideoUrl(String videoUrl) {
         this.videoUrl = videoUrl;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeString(shortDescription);
+        parcel.writeString(longDescription);
+        parcel.writeString(videoUrl);
     }
 }
