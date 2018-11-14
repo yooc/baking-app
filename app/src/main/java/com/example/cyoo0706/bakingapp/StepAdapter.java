@@ -17,12 +17,18 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder> {
-    private Recipe mSelectedRecipe;
-    private List<Step> mStepData;
 
-    public StepAdapter(Recipe recipe) {
-        mSelectedRecipe = recipe;
-        mStepData = mSelectedRecipe.getSteps();
+    private List<Step> mStepData;
+    final private StepAdapterOnClickHandler mClickHandler;
+
+    public interface StepAdapterOnClickHandler {
+        void onClick(Step step);
+    }
+
+    public StepAdapter(Recipe recipe, StepAdapterOnClickHandler clickHandler) {
+        Recipe selectedRecipe = recipe;
+        mStepData = selectedRecipe.getSteps();
+        mClickHandler = clickHandler;
     }
 
     @NonNull
@@ -50,13 +56,21 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
         return mStepData.size();
     }
 
-    class StepViewHolder extends RecyclerView.ViewHolder {
+    class StepViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.overview_short_description_tv)
         TextView mStepOverviewDescriptionTextView;
 
         public StepViewHolder(View view){
             super(view);
             ButterKnife.bind(this, view);
+            view.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            int position = getAdapterPosition();
+            Step step = mStepData.get(position);
+            mClickHandler.onClick(step);
         }
     }
 }

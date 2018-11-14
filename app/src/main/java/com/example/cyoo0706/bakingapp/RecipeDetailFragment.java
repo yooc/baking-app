@@ -12,12 +12,12 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link SelectStepFragment.OnFragmentInteractionListener} interface
+ * {@link RecipeDetailFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link SelectStepFragment#newInstance} factory method to
+ * Use the {@link RecipeDetailFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SelectStepFragment extends Fragment {
+public class RecipeDetailFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -29,7 +29,7 @@ public class SelectStepFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public SelectStepFragment() {
+    public RecipeDetailFragment() {
         // Required empty public constructor
     }
 
@@ -39,11 +39,11 @@ public class SelectStepFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment SelectStepFragment.
+     * @return A new instance of fragment RecipeDetailFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static SelectStepFragment newInstance(String param1, String param2) {
-        SelectStepFragment fragment = new SelectStepFragment();
+    public static RecipeDetailFragment newInstance(String param1, String param2) {
+        RecipeDetailFragment fragment = new RecipeDetailFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
