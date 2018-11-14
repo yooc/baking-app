@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -27,6 +28,8 @@ import retrofit2.Retrofit;
 public class MainActivity extends AppCompatActivity implements RecipeAdapter.RecipeAdapterOnClickHandler {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
+    private static final String RECIPE_EXTRA = "Selected Recipe";
+
     @BindView(R.id.recipe_rv)
     RecyclerView mRecyclerView;
 
@@ -85,8 +88,9 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
     @Override
     public void onClick(Recipe recipe) {
         Context context = this;
-        Class destinationActivity = SelectStepActivity.class;
+        Class destinationActivity = RecipeDetailActivity.class;
         Intent intent = new Intent(context, destinationActivity);
+        intent.putExtra(RECIPE_EXTRA, recipe);
         startActivity(intent);
     }
 }

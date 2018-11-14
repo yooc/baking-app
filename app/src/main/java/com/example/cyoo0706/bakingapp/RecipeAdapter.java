@@ -1,7 +1,9 @@
 package com.example.cyoo0706.bakingapp;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +16,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeAdapterViewHolder> {
+public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
 
     private List<Recipe> mRecipeData;
     final private RecipeAdapterOnClickHandler mClickHandler;
@@ -27,18 +29,19 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeAdap
         mClickHandler = clickHandler;
     }
 
+    @NonNull
     @Override
-    public RecipeAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         int recipeListItem = R.layout.recipe_list_item;
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(recipeListItem, null);
 
-        return new RecipeAdapterViewHolder(view);
+        return new RecipeViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(RecipeAdapterViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecipeViewHolder holder, int position) {
         String name = mRecipeData.get(position).getName();
         holder.mRecipeNameTextView.setText(name);
     }
@@ -56,11 +59,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeAdap
         notifyDataSetChanged();
     }
 
-    class RecipeAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class RecipeViewHolder extends ViewHolder implements View.OnClickListener {
         @BindView(R.id.recipe_name_tv)
         TextView mRecipeNameTextView;
 
-        public RecipeAdapterViewHolder(View itemView) {
+        public RecipeViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
