@@ -25,15 +25,17 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepAdapt
     @BindView(R.id.steps_overview_rv)
     RecyclerView mStepsListRecyclerView;
 
+    Recipe mSelectedRecipe;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_detail);
         ButterKnife.bind(this);
 
-        Recipe selectedRecipe = this.getIntent().getParcelableExtra(RECIPE_EXTRA);
+        mSelectedRecipe = this.getIntent().getParcelableExtra(RECIPE_EXTRA);
 
-        IngredientAdapter ingredientsAdapter = new IngredientAdapter(selectedRecipe);
+        IngredientAdapter ingredientsAdapter = new IngredientAdapter(mSelectedRecipe);
         mIngredientsRecyclerView.setAdapter(ingredientsAdapter);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(
                 this,
@@ -43,7 +45,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepAdapt
         );
         mIngredientsRecyclerView.setLayoutManager(gridLayoutManager);
 
-        StepAdapter stepAdapter = new StepAdapter(selectedRecipe, this);
+        StepAdapter stepAdapter = new StepAdapter(mSelectedRecipe, LOG_TAG, this);
         mStepsListRecyclerView.setAdapter(stepAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mStepsListRecyclerView.setLayoutManager(linearLayoutManager);
@@ -54,6 +56,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepAdapt
         Context context = this;
         Class destinationActivity = StepDetailActivity.class;
         Intent intent = new Intent(context, destinationActivity);
+        intent.putExtra(RECIPE_EXTRA, mSelectedRecipe);
         intent.putExtra(STEP_EXTRA, step);
         startActivity(intent);
     }
