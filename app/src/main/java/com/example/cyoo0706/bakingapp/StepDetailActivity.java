@@ -8,6 +8,11 @@ import android.widget.TextView;
 
 import com.example.cyoo0706.bakingapp.data.Recipe;
 import com.example.cyoo0706.bakingapp.data.Step;
+import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.trackselection.TrackSelector;
+import com.google.android.exoplayer2.ui.PlayerView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,6 +24,8 @@ public class StepDetailActivity extends AppCompatActivity {
 
     @BindView(R.id.steps_detail_rv)
     RecyclerView mRecyclerView;
+    @BindView(R.id.playerView)
+    PlayerView mPlayerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,5 +40,9 @@ public class StepDetailActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(adapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(linearLayoutManager);
+
+        TrackSelector trackSelector = new DefaultTrackSelector();
+        SimpleExoPlayer player = ExoPlayerFactory.newSimpleInstance(this, trackSelector);
+        mPlayerView.setPlayer(player);
     }
 }
