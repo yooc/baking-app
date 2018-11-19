@@ -1,10 +1,13 @@
 package com.example.cyoo0706.bakingapp;
 
+import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.cyoo0706.bakingapp.data.Recipe;
@@ -34,16 +37,19 @@ public class StepDetailActivity extends AppCompatActivity {
     @BindView(R.id.playerView)
     PlayerView mPlayerView;
 
+    Recipe mSelectedRecipe;
+    Step mSelectedStep;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step_detail);
         ButterKnife.bind(this);
 
-        Recipe selectedRecipe = this.getIntent().getParcelableExtra(RECIPE_EXTRA);
-        Step selectedStep = this.getIntent().getParcelableExtra(STEP_EXTRA);
+        mSelectedRecipe = this.getIntent().getParcelableExtra(RECIPE_EXTRA);
+        mSelectedStep = this.getIntent().getParcelableExtra(STEP_EXTRA);
 
-        StepAdapter adapter = new StepAdapter(selectedRecipe, selectedStep, LOG_TAG);
+        StepAdapter adapter = new StepAdapter(mSelectedRecipe, mSelectedStep, LOG_TAG);
         mRecyclerView.setAdapter(adapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(linearLayoutManager);
@@ -57,9 +63,24 @@ public class StepDetailActivity extends AppCompatActivity {
                     Util.getUserAgent(this, "BakingApp")
             );
             MediaSource source = new ExtractorMediaSource.Factory(dataSourceFactory)
-                    .createMediaSource(Uri.parse(selectedStep.getVideoUrl()));
+                    .createMediaSource(Uri.parse(mSelectedStep.getVideoUrl()));
             mExoPlayer.prepare(source);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Context context = this;
+                Class destinationActivity = RecipeDetailActivity.class;
+                Intent intent = new Intent(context, destinationActivity);
+                intent.putExtra(RECIPE_EXTRA, mSelectedRecipe);
+                intent.putExtra(STEP_EXTRA, mSelectedStep);
+                startActivity(intent);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

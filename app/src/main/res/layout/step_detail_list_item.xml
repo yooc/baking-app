@@ -4,8 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!--<-VideoView-/>-->
-
     <TextView
         android:id="@+id/detail_short_description_tv"
         android:layout_width="match_parent"
