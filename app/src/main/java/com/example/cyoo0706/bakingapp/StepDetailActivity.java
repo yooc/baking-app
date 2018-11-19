@@ -1,5 +1,6 @@
 package com.example.cyoo0706.bakingapp;
 
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,9 +11,14 @@ import com.example.cyoo0706.bakingapp.data.Recipe;
 import com.example.cyoo0706.bakingapp.data.Step;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.source.ExtractorMediaSource;
+import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.ui.PlayerView;
+import com.google.android.exoplayer2.upstream.DataSource;
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.google.android.exoplayer2.util.Util;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,6 +30,7 @@ public class StepDetailActivity extends AppCompatActivity {
 
     @BindView(R.id.steps_detail_rv)
     RecyclerView mRecyclerView;
+    SimpleExoPlayer mExoPlayer;
     @BindView(R.id.playerView)
     PlayerView mPlayerView;
 
@@ -41,8 +48,25 @@ public class StepDetailActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(linearLayoutManager);
 
-        TrackSelector trackSelector = new DefaultTrackSelector();
-        SimpleExoPlayer player = ExoPlayerFactory.newSimpleInstance(this, trackSelector);
-        mPlayerView.setPlayer(player);
+        if (mExoPlayer == null) {
+            TrackSelector trackSelector = new DefaultTrackSelector();
+            mExoPlayer = ExoPlayerFactory.newSimpleInstance(this, trackSelector);
+            mPlayerView.setPlayer(mExoPlayer);
+            DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(
+                    this,
+                    Util.getUserAgent(this, "BakingApp")
+            );
+            MediaSource source = new ExtractorMediaSource.Factory(dataSourceFactory)
+                    .createMediaSource(Uri.parse(selectedStep.getVideoUrl()));
+            mExoPlayer.prepare(source);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mExoPlayer.stop();
+        mExoPlayer.release();
+        mExoPlayer = null;
     }
 }
