@@ -25,14 +25,16 @@
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value=".MainActivity" />
         </activity>
 
-        <activity android:name=".StepDetailActivity"
+        <activity
+            android:name=".StepDetailActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:parentActivityName=".RecipeDetailActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".RecipeDetailActivity"/>
+                android:value=".RecipeDetailActivity" />
         </activity>
     </application>
 

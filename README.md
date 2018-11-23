@@ -11,3 +11,4 @@ Libraries Used:
 
 Code References:
 - https://developer.android.com/training/implementing-navigation/ancestral
+- https://stackoverflow.com/questions/48420974/fullscreen-the-exoplayer

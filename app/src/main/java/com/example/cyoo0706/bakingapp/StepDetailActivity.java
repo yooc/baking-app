@@ -2,13 +2,14 @@ package com.example.cyoo0706.bakingapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.view.ViewGroup;
 
 import com.example.cyoo0706.bakingapp.data.Recipe;
 import com.example.cyoo0706.bakingapp.data.Step;
@@ -65,6 +66,23 @@ public class StepDetailActivity extends AppCompatActivity {
             MediaSource source = new ExtractorMediaSource.Factory(dataSourceFactory)
                     .createMediaSource(Uri.parse(mSelectedStep.getVideoUrl()));
             mExoPlayer.prepare(source);
+        }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            ViewGroup.LayoutParams params = mPlayerView.getLayoutParams();
+            params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+            params.height = ViewGroup.LayoutParams.MATCH_PARENT;
+            mPlayerView.setLayoutParams(params);
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            ViewGroup.LayoutParams params = mPlayerView.getLayoutParams();
+            params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+            params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+            mPlayerView.setLayoutParams(params);
         }
     }
 
