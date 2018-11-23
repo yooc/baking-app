@@ -9,6 +9,7 @@
     <TextView
         android:id="@+id/recipe_name_tv"
         tools:text="Nutella Pie"
+        android:padding="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="30sp"/>

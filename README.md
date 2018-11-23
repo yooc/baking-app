@@ -8,3 +8,6 @@ Project uses provided JSON data to fetch recipe information.
 Libraries Used:
 - [Butterknife](http://jakewharton.github.io/butterknife/)
 - [Retrofit](https://square.github.io/retrofit/)
+
+Code References:
+- https://developer.android.com/training/implementing-navigation/ancestral
