@@ -2,6 +2,7 @@ package com.example.cyoo0706.bakingapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -31,24 +32,19 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepAdapt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_detail);
-        ButterKnife.bind(this);
 
         mSelectedRecipe = this.getIntent().getParcelableExtra(RECIPE_EXTRA);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(RECIPE_EXTRA, mSelectedRecipe);
 
-        IngredientAdapter ingredientsAdapter = new IngredientAdapter(mSelectedRecipe);
-        mIngredientsRecyclerView.setAdapter(ingredientsAdapter);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(
-                this,
-                2,
-                GridLayoutManager.VERTICAL,
-                false
-        );
-        mIngredientsRecyclerView.setLayoutManager(gridLayoutManager);
+        RecipeDetailFragment recipeDetailFragment = new RecipeDetailFragment();
+        recipeDetailFragment.setArguments(bundle);
 
-        StepAdapter stepAdapter = new StepAdapter(mSelectedRecipe, LOG_TAG, this);
-        mStepsListRecyclerView.setAdapter(stepAdapter);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        mStepsListRecyclerView.setLayoutManager(linearLayoutManager);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager
+                .beginTransaction()
+                .add(R.id.recipe_detail_container, recipeDetailFragment)
+                .commit();
     }
 
     @Override

@@ -6,36 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".RecipeDetailActivity">
 
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/recipe_detail_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="@string/ingredients_label"
-            android:textSize="25sp"
-            android:textStyle="bold" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/ingredients_rv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="5dp"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="@string/steps_label"
-            android:textSize="25sp"
-            android:textStyle="bold" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/steps_overview_rv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:scaleType="centerInside" />
 </android.support.v4.widget.NestedScrollView>
