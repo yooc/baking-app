@@ -3,11 +3,8 @@ package com.example.cyoo0706.bakingapp;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 
 import com.example.cyoo0706.bakingapp.data.Recipe;
-
-import butterknife.BindView;
 
 public class RecipeDetailActivity extends AppCompatActivity {
 
