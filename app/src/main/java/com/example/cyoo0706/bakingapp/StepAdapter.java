@@ -48,7 +48,7 @@ public class StepAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         View view;
-        if (mOriginActivity.equals(RecipeDetailActivity.class.getSimpleName())) {
+        if (mOriginActivity.equals(RecipeDetailFragment.class.getSimpleName())) {
             int stepOverviewListItem = R.layout.step_overview_list_item;
             LayoutInflater inflater = LayoutInflater.from(context);
             view = inflater.inflate(stepOverviewListItem, null);
@@ -63,7 +63,7 @@ public class StepAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if (mOriginActivity.equals(RecipeDetailActivity.class.getSimpleName())) {
+        if (mOriginActivity.equals(RecipeDetailFragment.class.getSimpleName())) {
             String overviewDescription = mStepData.get(position).getShortDescription();
 
             StepOverviewViewHolder view = (StepOverviewViewHolder) holder;
@@ -81,7 +81,7 @@ public class StepAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        if (mOriginActivity.equals(RecipeDetailActivity.class.getSimpleName())) {
+        if (mOriginActivity.equals(RecipeDetailFragment.class.getSimpleName())) {
             if (mStepData == null) {
                 return 0;
             }
