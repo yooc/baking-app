@@ -1,5 +1,7 @@
 package com.example.cyoo0706.bakingapp;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -62,8 +64,11 @@ public class RecipeDetailFragment extends Fragment implements StepAdapter.StepAd
 
     @Override
     public void onClick(Step step) {
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(RECIPE_EXTRA, mSelectedRecipe);
-        bundle.putParcelable(STEP_EXTRA, step);
+        Context context = getContext();
+        Class destinationActivity = StepDetailActivity.class;
+        Intent intent = new Intent(context, destinationActivity);
+        intent.putExtra(RECIPE_EXTRA, mSelectedRecipe);
+        intent.putExtra(STEP_EXTRA, step);
+        startActivity(intent);
     }
 }
